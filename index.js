@@ -42,6 +42,14 @@ app.get('/units', function (req, res) {
 
 });
 
+app.get('/units/structures/:structures', function(req, res) {
+
+  console.log("Sending the JSON Units for specify structure");
+  res.setHeader('Content-Type', 'application/json');
+  res.send(jsonContent.units[req.params.structures]);
+
+});
+
 app.get('/units/:name', function (req, res) {
   var found = false;
   console.log("Sending the JSON Units");
