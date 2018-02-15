@@ -19,6 +19,16 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+// Handle 404
+app.use(function(req, res) {
+  res.send('404: Page not Found', 404);
+});
+
+// Handle 500
+app.use(function(error, req, res, next) {
+  res.send('500: Internal Server Error', 500);
+});
+
 // Public path
 var publicPath = 'public';
 
@@ -43,19 +53,40 @@ app.get('/units', function(req, res) {
 });
 
 app.get('/units/:name', function(req, res) {
-
+  var found = false;
   console.log("Sending the JSON Units");
   res.setHeader('Content-Type', 'text/plain');
   for (bat in jsonContent.units){
     for (unit in jsonContent.units[bat]){
       if (req.params.name == jsonContent.units[bat][unit].Name){
         res.send(jsonContent.units[bat][unit]);
+        found = true;
+        break;
       }
     }
   }
+  // Not found
+  if (!found)
+    res.send("error not found");
+});
 
-  
+app.get('/structures/:name', function(req, res) {
 
+  var found = false;
+  console.log("Sending the JSON Structures");
+  res.setHeader('Content-Type', 'text/plain');
+  for (bat in jsonContent.structures){
+    for (unit in jsonContent.structures[bat]){
+      if (req.params.name == jsonContent.structures[bat][unit].Name){
+        res.send(jsonContent.structures[bat][unit]);
+        found = true;
+        break;
+      }
+    }
+  } 
+  // Not found
+  if (!found)
+    res.send("error not found");
 });
 
 app.get('/structures', function(req, res) {
