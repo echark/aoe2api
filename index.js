@@ -34,9 +34,6 @@ app.get('/', function(req, res) {
 
 });
 
-
-
-
 app.get('/units', function(req, res) {
 
   console.log("Sending the JSON Units");
@@ -49,12 +46,15 @@ app.get('/units/:name', function(req, res) {
 
   console.log("Sending the JSON Units");
   res.setHeader('Content-Type', 'text/plain');
- for (var bat in jsonContent.units) {
-   //console.log(jsonContent.units[bat]);
-   for (var unit in jsonContent.units[bat]) {
-     console.log(jsonContent.units[bat][unit]);
-   }
- }
+  for (bat in jsonContent.units){
+    for (unit in jsonContent.units[bat]){
+      if (req.params.name == jsonContent.units[bat][unit].Name){
+        res.send(jsonContent.units[bat][unit]);
+      }
+    }
+  }
+
+  
 
 });
 
