@@ -25,6 +25,26 @@ var publicPath = 'public';
 // Définition du dossier public
 app.use(express.static(publicPath));
 
+// Add headers
+app.use(function (req, res, next) {
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  //res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  //res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
+});
+
 app.get('/', function (req, res) {
 
   console.log("HOME");
@@ -34,6 +54,7 @@ app.get('/', function (req, res) {
 
 });
 
+// Units List
 app.get('/units', function (req, res) {
 
   console.log("Sending the JSON Units");
@@ -42,6 +63,7 @@ app.get('/units', function (req, res) {
 
 });
 
+//Units List for specify structure
 app.get('/units/structures/:structures', function(req, res) {
 
   console.log("Sending the JSON Units for specify structure");
@@ -50,6 +72,7 @@ app.get('/units/structures/:structures', function(req, res) {
 
 });
 
+//Unit with specify name
 app.get('/units/:name', function (req, res) {
   var found = false;
   console.log("Sending the JSON Units");
@@ -69,6 +92,7 @@ app.get('/units/:name', function (req, res) {
     res.send("error not found");
 });
 
+//Structure with specify name
 app.get('/structures/:name', function (req, res) {
 
   var found = false;
@@ -89,6 +113,7 @@ app.get('/structures/:name', function (req, res) {
     res.send("error not found");
 });
 
+//Structures List
 app.get('/structures', function (req, res) {
 
   console.log("Sending the JSON Units");
