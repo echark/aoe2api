@@ -92,6 +92,32 @@ app.get('/units/:name', function (req, res) {
     res.send("error not found");
 });
 
+// Get an array of all units who have their stat "query" equal to "value"
+app.get('/units/query/:query/:value', function (req, res) {
+  var found = false;
+  var allUnits = [];
+  console.log("Sending the JSON Units");
+  res.setHeader('Content-Type', 'text/plain');
+  
+  for (bat in jsonContent.units) {
+    for (unit in jsonContent.units[bat]) {
+      var query = req.params.query
+      var value = req.params.value
+      //console.log(query);
+      //console.log(jsonContent.units[bat][unit][query]);
+      if (jsonContent.units[bat][unit][query] == value) {
+      allUnits.push(jsonContent.units[bat][unit]);
+      }
+    }
+  }
+  if (allUnits.length != 0) {
+    res.send(allUnits);
+  } else {
+    res.send("error not found");
+  }
+
+});
+
 //Structure with specify name
 app.get('/structures/:name', function (req, res) {
 
