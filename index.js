@@ -49,7 +49,6 @@ app.get('/', function (req, res) {
 
   console.log("HOME");
   res.setHeader('Content-Type', 'application/json');
-  //res.send(JSON.stringify({ a: 1 }));
   res.send(jsonContent);
 
 });
@@ -111,7 +110,8 @@ app.get('/units/query/:query/:value', function (req, res) {
     }
   }
   if (allUnits.length != 0) {
-    res.send(allUnits);
+   var toto = JSON.stringify(allUnits);
+    res.send("{\"Units\" : " + toto + "}");
   } else {
     res.send("error not found");
   }
