@@ -48,9 +48,9 @@ app.use(function (req, res, next) {
 app.get('/', function (req, res) {
 
   console.log("HOME");
-  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader('Content-Type', 'application/json');
   //res.send(JSON.stringify({ a: 1 }));
-  res.send(jsonContent["units"]["Archery Range"][0].Name);
+  res.send("Welcome !\nYou can try :\n- /units\n- /units/nameoftheunit");
 
 });
 
@@ -76,7 +76,7 @@ app.get('/units/structures/:structures', function(req, res) {
 app.get('/units/:name', function (req, res) {
   var found = false;
   console.log("Sending the JSON Units");
-  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader('Content-Type', 'application/json');
   for (bat in jsonContent.units) {
     for (unit in jsonContent.units[bat]) {
       if (req.params.name == jsonContent.units[bat][unit].Name) {
@@ -97,7 +97,7 @@ app.get('/units/query/:query/:value', function (req, res) {
   var found = false;
   var allUnits = [];
   console.log("Sending the JSON Units");
-  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader('Content-Type', 'application/json');
   
   for (bat in jsonContent.units) {
     for (unit in jsonContent.units[bat]) {
@@ -111,7 +111,8 @@ app.get('/units/query/:query/:value', function (req, res) {
     }
   }
   if (allUnits.length != 0) {
-    res.send(allUnits);
+   var toto = JSON.stringify(allUnits);
+    res.send("{\"Units\" : " + toto + "}");
   } else {
     res.send("error not found");
   }
@@ -123,7 +124,7 @@ app.get('/structures/:name', function (req, res) {
 
   var found = false;
   console.log("Sending the JSON Structures");
-  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader('Content-Type', 'application/json');
   for (bat in jsonContent.structures) {
     for (unit in jsonContent.structures[bat]) {
       if (req.params.name == jsonContent.structures[bat][unit].Name) {
