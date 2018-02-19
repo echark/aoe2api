@@ -50,7 +50,7 @@ app.get('/', function (req, res) {
   console.log("HOME");
   res.setHeader('Content-Type', 'application/json');
   //res.send(JSON.stringify({ a: 1 }));
-  res.send(jsonContent["units"]["Archery Range"][0].Name);
+  res.send(jsonContent);
 
 });
 
